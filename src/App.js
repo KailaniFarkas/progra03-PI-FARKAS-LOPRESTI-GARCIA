@@ -10,6 +10,7 @@ import Favorites from './components/Favorites/Favorites';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/" component={Home} />
+          {/* <Route component={NotFound} /> */}
         </Switch>
         <Footer />
       </div>
