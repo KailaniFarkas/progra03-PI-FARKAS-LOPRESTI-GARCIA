@@ -90,3 +90,28 @@ nav {
         grid-template-columns: 1fr;
     }
 }
+
+.register-form {
+    width: 400px;
+    margin: 40px auto;
+}
+
+.register-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.register-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.register-form input[type="submit"] {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
