@@ -1,6 +1,7 @@
 import React from 'react';
 
-function Movies() {
+
+  function Movies() {
   return (
     <div>
       <h2 className="alert alert-primary">Todas las películas</h2>

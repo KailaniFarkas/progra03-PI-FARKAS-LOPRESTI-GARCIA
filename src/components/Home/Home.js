@@ -5,6 +5,11 @@ class Home extends Component {
     super(props);
     this.state = {
       popularMovies: [],
+      popularSeries: [],
+      // Soon: [],
+      // TopRated: [],
+      // AiringToday: [],
+      // OnTelevision: [],
     };
   }
 
@@ -13,6 +18,13 @@ class Home extends Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ popularMovies: data.results });
+      })
+      .catch(error => console.log(error));
+
+    fetch('https://api.themoviedb.org/3/tv/popular?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ popularSeries: data.results });
       })
       .catch(error => console.log(error));
   }
