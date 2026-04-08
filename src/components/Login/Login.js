@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 
 class Login extends Component {
   constructor(props) {
@@ -10,12 +11,18 @@ class Login extends Component {
   }
 
   actualizarDatos(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ 
+      [event.target.name]: event.target.value 
+      });
+  }
+
+  ejecutarBusqueda(e){
+    e.preventDefault();
+    this.props.history.push("/")
   }
 
   evitarSubmit(event) {
     event.preventDefault();
-    console.log(this.state.email, this.state.password);
   }
 
   render() {
@@ -24,19 +31,9 @@ class Login extends Component {
         <h2 className="alert alert-primary">Iniciar Sesión</h2>
         <form className="register-form" onSubmit={(event) => this.evitarSubmit(event)}>
           <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={this.state.email}
-            onChange={(event) => this.actualizarDatos(event)}
-          />
+          <input type="email" name="email" value={this.state.email} onChange={(event) => this.actualizarDatos(event)}/>
           <label>Contraseña</label>
-          <input
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={(event) => this.actualizarDatos(event)}
-          />
+          <input type="password" name="password" value={this.state.password} onChange={(event) => this.actualizarDatos(event)}/>
           <input type="submit" value="Iniciar Sesión" />
         </form>
       </div>
@@ -44,4 +41,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter (Login);

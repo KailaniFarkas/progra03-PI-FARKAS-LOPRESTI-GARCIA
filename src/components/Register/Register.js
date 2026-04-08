@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 
 class Register extends Component {
   constructor(props) {
@@ -10,12 +11,21 @@ class Register extends Component {
   }
 
   actualizarDatos(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ 
+      [event.target.name]: event.target.value 
+      });
   }
 
   evitarSubmit(event) {
     event.preventDefault();
-    console.log(this.state.email, this.state.password);
+    if (this.state.email !== '') {
+      this.props.history.push()
+    }
+  }
+
+   ejecutarBusqueda(e){
+    e.preventDefault();
+    this.props.history.push("/login") 
   }
 
   render() {
@@ -24,24 +34,13 @@ class Register extends Component {
         <h2 className="alert alert-primary">Crear Cuenta</h2>
         <form className="register-form" onSubmit={(event) => this.evitarSubmit(event)}>
           <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={this.state.email}
-            onChange={(event) => this.actualizarDatos(event)}
-          />
+          <input type="email" name="email" value={this.state.email} onChange={(event) => this.actualizarDatos(event)}/>
           <label>Contraseña</label>
-          <input
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={(event) => this.actualizarDatos(event)}
-          />
+          <input type="password" name="password" value={this.state.password} onChange={(event) => this.actualizarDatos(event)}/>
           <input type="submit" value="Crear Cuenta" />
         </form>
       </div>
     );
   }
 }
-
-export default Register;
+export default withRouter (Register);
