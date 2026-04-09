@@ -1,7 +1,6 @@
-import React from 'react';
+import React from "react";
 
-
-  function Movies() {
+function MoviesYSeries() {
   return (
     <div>
       <h2 className="alert alert-primary">Todas las películas</h2>
@@ -10,4 +9,4 @@ import React from 'react';
   );
 }
 
-export default Movies;
+export default MoviesYSeries;
