@@ -7,8 +7,8 @@ import HomeScreen from "./screens/HomeScreen/HomeScreen";
 //import Movies from "./screens/Movies/Movies";
 //import Series from "./screens/Series/Series";
 //import Favorites from "./screens/Favorites/Favorites";
-//import Login from "./screens/Login/Login";
-//import Register from "./screens/Register/Register";
+import Login from "./screens/Login/Login";
+import Register from "./screens/Register/Register";
 //import Results from "./screens/Results/Results";
 //import DetailMovie from "./screens/DetailMovie/DetailMovie";
 //import DetailSeries from "./screens/DetailSeries/DetailSeries";
@@ -20,14 +20,14 @@ function App() {
       <div className="container">
         <Header />
         <Switch>
-          <Route path="/" component={HomeScreen} />
           {/* <Route path="/movies" component={MoviesYSeries} /> */}
           {/* <Route path="/series" component={SeriesYSeries} /> */}
           {/* <Route path="/detailmovie/:id" component={Detail} /> */}
           {/* <Route path="/detailseries/:id" component={Detail} /> */}
           {/* <Route path="/favorites" component={Favorites} /> */}
-          {/* <Route path="/login" component={Login} /> */}
-          {/* <Route path="/register" component={Register} /> */}
+          {<Route path="/login" component={Login} />}
+          {<Route path="/register" component={Register} />}
+          {<Route path="/" component={HomeScreen} />}
           {/* <Route path="/results/:busqueda" component={Results} /> () */}
           {/* <Route component={NotFound} /> */}
         </Switch>
