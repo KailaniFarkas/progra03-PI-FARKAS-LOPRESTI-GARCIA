@@ -7,7 +7,23 @@ class MovieCard extends Component {
     this.state = {
       textoBoton: "Ver mas",
       claseOculta: "oculta",
+      fotoFavoritos: "❤️"
     };
+  }
+
+
+  componentDidMount(){
+    let storage = localStorage.getItem('FavoriteMovies')
+
+    if (storage !== null) {
+       let storageparse = JSON.parse(storage)
+    
+      if (storageparse.includes(this.props.movie.id)) {
+        this.setState({fotoFavoritos: "❌"})
+      } else {
+        this.setState({fotoFavoritos: "❤️"})
+      }
+    } 
   }
 
   verDescripcion() {
@@ -24,7 +40,27 @@ class MovieCard extends Component {
     }
   }
 
+  anadirFav() {
+    if (this.state.fotoFavoritos === "❤️") {
+      let storage = localStorage.getItem('FavoriteMovies')
+      if (storage === null) {
+        let primerfav = [this.props.movie.id]
+        localStorage.setItem('FavoriteMovies', JSON.stringify(primerfav))
+        this.setState({fotoFavoritos: "❌"})
+    } else {
+      let storageparse = JSON.parse(storage)
+      storageparse.push(this.props.movie.id)
+      localStorage.setItem('FavoriteMovies', JSON.stringify(storageparse))
+      this.setState({fotoFavoritos: "❌"})
+      }
+    } else {
+      //aca es donde sacamos el id con un filter
+    }
+  }
+
   render() {
+    console.log(this.props);
+    
     return (
       <article className="single-card-movie" key={this.props.movie.id}>
         <img
@@ -41,6 +77,7 @@ class MovieCard extends Component {
             {this.props.movie.overview}
           </p>
           <Link to={"/detailmovie/:" + this.props.movie.id}>Ir a detalle</Link>
+          <p onClick={() => this.anadirFav()}>{this.state.fotoFavoritos}</p>
         </div>
       </article>
     );

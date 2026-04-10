@@ -6,7 +6,7 @@ import Footer from "./components/Footer/Footer";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 //import Movies from "./screens/Movies/Movies";
 //import Series from "./screens/Series/Series";
-//import Favorites from "./screens/Favorites/Favorites";
+import Favorites from "./screens/Favorites/Favorites";
 import Login from "./screens/Login/Login";
 import Register from "./screens/Register/Register";
 //import Results from "./screens/Results/Results";
@@ -24,7 +24,7 @@ function App() {
           {/* <Route path="/series" component={SeriesYSeries} /> */}
           {/* <Route path="/detailmovie/:id" component={Detail} /> */}
           {/* <Route path="/detailseries/:id" component={Detail} /> */}
-          {/* <Route path="/favorites" component={Favorites} /> */}
+          <Route path="/favorites" component={Favorites} />
           {<Route path="/login" component={Login} />}
           {<Route path="/register" component={Register} />}
           {<Route path="/" component={HomeScreen} />}
