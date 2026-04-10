@@ -7,7 +7,23 @@ class SerieCard extends Component {
     this.state = {
       textoBoton: "Ver mas",
       claseOculta: "oculta",
+      fotoFavoritos: "❤️"
     };
+  }
+
+
+  componentDidMount(){
+    let storage = localStorage.getItem('FavoriteSeries')
+
+    if (storage !== null) {
+       let storageparse = JSON.parse(storage)
+    
+      if (storageparse.includes(this.props.serie.id)) {
+        this.setState({fotoFavoritos: "❌"})
+      } else {
+        this.setState({fotoFavoritos: "❤️"})
+      }
+    } 
   }
 
   verDescripcion() {
@@ -24,23 +40,44 @@ class SerieCard extends Component {
     }
   }
 
+  anadirFav() {
+    if (this.state.fotoFavoritos === "❤️") {
+      let storage = localStorage.getItem('FavoriteSeries')
+      if (storage === null) {
+        let primerfav = [this.props.serie.id]
+        localStorage.setItem('FavoriteSeries', JSON.stringify(primerfav))
+        this.setState({fotoFavoritos: "❌"})
+    } else {
+      let storageparse = JSON.parse(storage)
+      storageparse.push(this.props.serie.id)
+      localStorage.setItem('FavoriteSeries', JSON.stringify(storageparse))
+      this.setState({fotoFavoritos: "❌"})
+      }
+    } else {
+      //aca es donde sacamos el id con un filter
+    }
+  }
+
   render() {
+    console.log(this.props);
+    
     return (
       <article className="single-card-movie" key={this.props.serie.id}>
         <img
           src={"https://image.tmdb.org/t/p/w500" + this.props.serie.poster_path}
           className="card-img-top"
-          alt={this.props.serie.original_name}
+          alt={this.props.serie.title}
         />
         <div className="cardBody">
-          <h5 className="card-title">{this.props.serie.original_name}</h5>
+          <h5 className="card-title">{this.props.serie.title}</h5>
           <button onClick={() => this.verDescripcion()}>
             {this.state.textoBoton}
           </button>
           <p className={"card-text " + this.state.claseOculta}>
             {this.props.serie.overview}
           </p>
-          <Link to={"/detailserie/:" + this.props.serie.id}>Ir a detalle</Link>
+          <Link to={"/detailmovie/:" + this.props.serie.id}>Ir a detalle</Link>
+          <p onClick={() => this.anadirFav()}>{this.state.fotoFavoritos}</p>
         </div>
       </article>
     );
