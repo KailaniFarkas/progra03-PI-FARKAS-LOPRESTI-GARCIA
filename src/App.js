@@ -28,7 +28,7 @@ function App() {
           <Route path="/favorites" component={Favorites} />
           {<Route path="/login" component={Login} />}
           {<Route path="/register" component={Register} />}
-          <Route path="/results/:busqueda" component={Results} />
+          <Route path="/results/:buscar" component={Results} />
           {<Route path="/" component={HomeScreen} />}
           {/* <Route component={NotFound} /> */}
         </Switch>

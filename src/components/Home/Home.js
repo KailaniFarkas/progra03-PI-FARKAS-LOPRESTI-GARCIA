@@ -66,11 +66,11 @@ class Home extends Component {
         <form className="search-form" onSubmit={(event) => this.evitarSubmit(event)}>
           <input
             className="search-input"
-            type="text"
+            type="text" placeholder="Buscar película o serie..."
             onChange={(event) => this.controlarCambios(event)}
             value={this.state.query}
           />
-          <input type="submit" value="Buscar" />
+          <input type="submit" value="🔍" />
         </form>
         <h2 className="alert alert-primary">Popular movies this week</h2>
         <Link to="/movies">Ver todas</Link>
