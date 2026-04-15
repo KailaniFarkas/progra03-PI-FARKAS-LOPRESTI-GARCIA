@@ -4,7 +4,7 @@ function HomeScreen() {
   return (
     <>
       <form className="search-form">
-        <label>Search bar</label>
+        <label>Search Bar</label>
         <input></input>
       </form>
       <Home />
