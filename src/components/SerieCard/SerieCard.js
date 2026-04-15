@@ -53,9 +53,13 @@ class SerieCard extends Component {
       localStorage.setItem('FavoriteSeries', JSON.stringify(storageparse))
       this.setState({fotoFavoritos: "❌"})
       }
-    } else {
-      //aca es donde sacamos el id con un filter
-    }
+    }else{
+        let storage = localStorage.getItem('FavoriteSeries');
+        let storageParse = JSON.parse(storage)
+        let filtrado = storageParse.filter((id)=> id !== this.props.serie.id);
+        localStorage.setItem('FavoriteSeries', JSON.stringify(filtrado));
+        this.setState({fotoFavoritos:"❤️"})
+   }
   }
 
   render() {
