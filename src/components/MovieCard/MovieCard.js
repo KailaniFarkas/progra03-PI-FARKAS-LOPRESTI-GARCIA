@@ -7,7 +7,7 @@ class MovieCard extends Component {
     this.state = {
       textoBoton: "Ver mas",
       claseOculta: "oculta",
-      fotoFavoritos: "❤️",
+      fotoFavoritos: "♡",
     };
   }
 
@@ -18,9 +18,9 @@ class MovieCard extends Component {
       let storageparse = JSON.parse(storage);
 
       if (storageparse.includes(this.props.movie.id)) {
-        this.setState({ fotoFavoritos: "❌" });
+        this.setState({ fotoFavoritos: "♥" });
       } else {
-        this.setState({ fotoFavoritos: "❤️" });
+        this.setState({ fotoFavoritos: "♡" });
       }
     }
   }
@@ -40,24 +40,24 @@ class MovieCard extends Component {
   }
 
   anadirFav() {
-    if (this.state.fotoFavoritos === "❤️") {
+    if (this.state.fotoFavoritos === "♡") {
       let storage = localStorage.getItem("FavoriteMovies");
       if (storage === null) {
         let primerfav = [this.props.movie.id];
         localStorage.setItem("FavoriteMovies", JSON.stringify(primerfav));
-        this.setState({ fotoFavoritos: "❌" });
+        this.setState({ fotoFavoritos: "♥" });
       } else {
         let storageparse = JSON.parse(storage);
         storageparse.push(this.props.movie.id);
         localStorage.setItem("FavoriteMovies", JSON.stringify(storageparse));
-        this.setState({ fotoFavoritos: "❌" });
+        this.setState({ fotoFavoritos: "♥" });
       }
     } else {
       let storage = localStorage.getItem('FavoriteMovies');
       let storageParse = JSON.parse(storage)
       let filtrado = storageParse.filter((id)=> id !== this.props.movie.id);
       localStorage.setItem('FavoriteMovies', JSON.stringify(filtrado));
-      this.setState({fotoFavoritos: "❤️"})
+      this.setState({fotoFavoritos: "♡"})
 
     }
   }

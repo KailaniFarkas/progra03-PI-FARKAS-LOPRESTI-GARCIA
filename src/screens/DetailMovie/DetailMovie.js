@@ -5,7 +5,7 @@ class DetailMovie extends Component {
     super(props);
     this.state = {
       movie: {},
-      fotoFavoritos: "❤️",
+      fotoFavoritos: "♡",
     };
   }
 
@@ -23,9 +23,9 @@ class DetailMovie extends Component {
         if (storage !== null) {
           let storageparse = JSON.parse(storage);
           if (storageparse.includes(data.id)) {
-            this.setState({ fotoFavoritos: "❌" });
+            this.setState({ fotoFavoritos: "♥" });
           } else {
-            this.setState({ fotoFavoritos: "❤️" });
+            this.setState({ fotoFavoritos: "♡" });
           }
         }
     })
@@ -33,24 +33,24 @@ class DetailMovie extends Component {
   }
 
   anadirFav() {
-    if (this.state.fotoFavoritos === "❤️") {
+    if (this.state.fotoFavoritos === "♡") {
       let storage = localStorage.getItem("FavoriteMovies");
       if (storage === null) {
         let primerfav = [this.state.movie.id];
         localStorage.setItem("FavoriteMovies", JSON.stringify(primerfav));
-        this.setState({ fotoFavoritos: "❌" });
+        this.setState({ fotoFavoritos: "♥" });
       } else {
         let storageparse = JSON.parse(storage);
         storageparse.push(this.state.movie.id);
         localStorage.setItem("FavoriteMovies", JSON.stringify(storageparse));
-        this.setState({ fotoFavoritos: "❌" });
+        this.setState({ fotoFavoritos: "♥" });
       }
     } else {
       let storage = localStorage.getItem('FavoriteMovies');
       let storageparse = JSON.parse(storage);
       let filtrado = storageparse.filter((id) => id !== this.state.movie.id);
       localStorage.setItem('FavoriteMovies', JSON.stringify(filtrado));
-      this.setState({ fotoFavoritos: '❤️' });
+      this.setState({ fotoFavoritos: '♡' });
     }
   }
 
@@ -80,7 +80,7 @@ class DetailMovie extends Component {
               <p className="mt-0 mb-0">
                 <strong>Géneros:</strong>{' '}
                 {this.state.movie.genres
-                  ? this.state.movie.genres.map((g) => g.name).join(','): 'Cargando...'}
+                  ? this.state.movie.genres.map((g) => g.name).join(', '): 'Cargando...'}
               </p>
               <p onClick={() => this.anadirFav()}>
                 {this.state.fotoFavoritos}

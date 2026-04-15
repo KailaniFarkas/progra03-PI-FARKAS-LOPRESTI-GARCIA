@@ -12,7 +12,7 @@ import Login from "./screens/Login/Login";
 import Register from "./screens/Register/Register";
 import Results from "./screens/Results/Results";
 import DetailMovie from "./screens/DetailMovie/DetailMovie";
-import DetailSeries from "./screens/DetailSeries/DetailSeries";
+import DetailSerie from "./screens/DetailSerie/DetailSerie";
 //import NotFound from "./screens/NotFound/NotFound";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
           <Route path="/movies" component={MoviesScreen} />
           <Route path="/series" component={SeriesScreen} />
           <Route path="/detailmovie/:id" component={DetailMovie} />
-          <Route path="/detailseries/:id" component={DetailSeries} />
+          <Route path="/detailserie/:id" component={DetailSerie} />
           <Route path="/favorites" component={Favorites} />
           {<Route path="/login" component={Login} />}
           {<Route path="/register" component={Register} />}
