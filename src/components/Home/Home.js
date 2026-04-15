@@ -9,6 +9,7 @@ class Home extends Component {
     this.state = {
       popularMovies: [],
       popularSeries: [],
+      query: ''
       // Soon: [],
       // TopRated: [],
       // AiringToday: [],
@@ -36,6 +37,15 @@ class Home extends Component {
       .catch((error) => console.log(error));
   }
 
+  evitarSubmit(event) {
+    event.preventDefault();
+    this.props.history.push("/results/" + this.state.query);
+  }
+
+  controlarCambios(event) {
+    this.setState({ query: event.target.value });
+  }
+
   verDescripcion() {
     if (this.state.textoBoton === "Ver mas") {
       this.setState({
@@ -53,6 +63,15 @@ class Home extends Component {
   render() {
     return (
       <div>
+        <form className="search-form" onSubmit={(event) => this.evitarSubmit(event)}>
+          <input
+            className="search-input"
+            type="text"
+            onChange={(event) => this.controlarCambios(event)}
+            value={this.state.query}
+          />
+          <input type="submit" value="Buscar" />
+        </form>
         <h2 className="alert alert-primary">Popular movies this week</h2>
         <Link to="/movies">Ver todas</Link>
         <section className="row cards">

@@ -18,10 +18,21 @@ nav {
 .search-form,
 .filter-form {
   padding: 0.5rem 0;
-  margin-bottom: 20px;
-  display: grid;
-  grid-template-columns: 5fr 1fr;
-  column-gap: 5px;
+  margin-bottom: 30px;
+  display: flex;
+}
+.search-input {
+  width: 40%;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
 }
 .filter-form {
   grid-template-columns: 1fr;
@@ -88,6 +99,22 @@ nav {
 
 .oculta {
   display: none;
+}
+
+.cardBody button {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.cardBody button:hover {
+  border-color: #333;
+  color: #000;
 }
 
 @media (min-width: 765px) {

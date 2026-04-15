@@ -53,7 +53,12 @@ class MovieCard extends Component {
         this.setState({ fotoFavoritos: "❌" });
       }
     } else {
-      //aca es donde sacamos el id con un filter
+      let storage = localStorage.getItem('FavoriteMovies');
+      let storageParse = JSON.parse(storage)
+      let filtrado = storageParse.filter((id)=> id !== this.props.movie.id);
+      localStorage.setItem('FavoriteMovies', JSON.stringify(filtrado));
+      this.setState({fotoFavoritos: "❤️"})
+
     }
   }
 
