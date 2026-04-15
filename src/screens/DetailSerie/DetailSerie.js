@@ -64,19 +64,19 @@ class DetailSerie extends Component {
                 <h3>Descripción</h3>
                 <p className="description">{this.state.serie.overview}</p>
                 <p className="mt-0 mb-0" id="release-date">
-                  <strong>Fecha de estreno:</strong> {this.state.serie.first_air_date}
+                  <strong>Fecha de estreno: </strong> {this.state.serie.first_air_date}
                 </p>
                 <p className="mt-0 mb-0" id="episodes">
-                  <strong>Número de capítulos:</strong>{this.state.serie.number_of_episodes}
+                  <strong>Número de capítulos: </strong>{this.state.serie.number_of_episodes}
                 </p>
                 <p className="mt-0 seasons">
-                  <strong>Temporadas:</strong>{this.state.serie.number_of_seasons}
+                  <strong>Temporadas: </strong>{this.state.serie.number_of_seasons}
                 </p>
                 <p className="mt-0 mb-0">
-                  <strong>Puntuación:</strong> {this.state.serie.vote_average}
+                  <strong>Puntuación: </strong> {this.state.serie.vote_average}
                 </p>
                 <p className="mt-0 mb-0">
-                  <strong>Géneros:</strong>{' '}
+                  <strong>Géneros: </strong>{' '}
                   {this.state.serie.genres
                     ? this.state.serie.genres.map((g) => g.name).join(', '): 'Cargando...'}
                 </p>

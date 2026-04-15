@@ -69,16 +69,16 @@ class DetailMovie extends Component {
               <h3>Descripción</h3>
               <p className="description">{this.state.movie.overview}</p>
               <p className="mt-0 mb-0">
-                <strong>Fecha de estreno:</strong> {this.state.movie.release_date}
+                <strong>Fecha de estreno: </strong> {this.state.movie.release_date}
               </p>
               <p className="mt-0 mb-0">
-                <strong>Duración:</strong> {this.state.movie.runtime} minutos
+                <strong>Duración: </strong> {this.state.movie.runtime} minutos
               </p>
               <p className="mt-0 mb-0">
-                <strong>Puntuación:</strong> {this.state.movie.vote_average}
+                <strong>Puntuación: </strong> {this.state.movie.vote_average}
               </p>
               <p className="mt-0 mb-0">
-                <strong>Géneros:</strong>{' '}
+                <strong>Géneros: </strong>{' '}
                 {this.state.movie.genres
                   ? this.state.movie.genres.map((g) => g.name).join(', '): 'Cargando...'}
               </p>
