@@ -12,7 +12,7 @@ import SeriesScreen from "./screens/SeriesScreen/SeriesScreen";
 //import Favorites from "./screens/Favorites/Favorites";
 import Login from "./screens/Login/Login";
 import Register from "./screens/Register/Register";
-//import Results from "./screens/Results/Results";
+import Results from "./screens/Results/Results";
 //import DetailMovie from "./screens/DetailMovie/DetailMovie";
 //import DetailSeries from "./screens/DetailSeries/DetailSeries";
 //import NotFound from "./screens/NotFound/NotFound";
@@ -30,8 +30,8 @@ function App() {
           <Route path="/favorites" component={Favorites} />
           {<Route path="/login" component={Login} />}
           {<Route path="/register" component={Register} />}
+          <Route path="/results/:busqueda" component={Results} />
           {<Route path="/" component={HomeScreen} />}
-          {/* <Route path="/results/:busqueda" component={Results} /> () */}
           {/* <Route component={NotFound} /> */}
         </Switch>
         <Footer />
