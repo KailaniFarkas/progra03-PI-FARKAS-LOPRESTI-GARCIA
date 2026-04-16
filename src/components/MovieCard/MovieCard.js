@@ -5,7 +5,7 @@ class MovieCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      textoBoton: "Ver mas",
+      textoBoton: "Ver más",
       claseOculta: "oculta",
       fotoFavoritos: "♡",
     };
@@ -26,14 +26,14 @@ class MovieCard extends Component {
   }
 
   verDescripcion() {
-    if (this.state.textoBoton === "Ver mas") {
+    if (this.state.textoBoton === "Ver más") {
       this.setState({
         textoBoton: "Ver menos",
         claseOculta: "",
       });
     } else {
       this.setState({
-        textoBoton: "Ver mas",
+        textoBoton: "Ver más",
         claseOculta: "oculta",
       });
     }
@@ -53,12 +53,11 @@ class MovieCard extends Component {
         this.setState({ fotoFavoritos: "♥" });
       }
     } else {
-      let storage = localStorage.getItem('FavoriteMovies');
-      let storageParse = JSON.parse(storage)
-      let filtrado = storageParse.filter((id)=> id !== this.props.movie.id);
-      localStorage.setItem('FavoriteMovies', JSON.stringify(filtrado));
-      this.setState({fotoFavoritos: "♡"})
-
+      let storage = localStorage.getItem("FavoriteMovies");
+      let storageParse = JSON.parse(storage);
+      let filtrado = storageParse.filter((id) => id !== this.props.movie.id);
+      localStorage.setItem("FavoriteMovies", JSON.stringify(filtrado));
+      this.setState({ fotoFavoritos: "♡" });
     }
   }
 

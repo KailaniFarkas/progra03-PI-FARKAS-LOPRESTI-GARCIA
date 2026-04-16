@@ -4,30 +4,33 @@ import { Link } from "react-router-dom";
 function Header() {
   return (
     <React.Fragment>
-      <h1>UdeSA Movies</h1>
+      <h1 className="title">UdeSA Movies</h1>
       <nav>
         <ul className="nav nav-tabs my-4">
           <li className="nav-item">
+            <img src="../img/logo.jpeg" className="logo" alt="Logo"></img>
+          </li>
+          <li>
             <Link className="nav-link" to="/">
               Home
             </Link>
           </li>
-          <li className="nav-item">
+          <li>
             <Link className="nav-link" to="/movies">
               Películas
             </Link>
           </li>
-          <li className="nav-item">
+          <li>
             <Link className="nav-link" to="/series">
               Series
             </Link>
           </li>
-          <li className="nav-item">
+          <li>
             <Link className="nav-link" to="/favorites">
               Favoritas
             </Link>
           </li>
-          <li className="nav-item ml-auto">
+          <li className="ml-auto">
             <Link className="nav-link" to="/register">
               Registro
             </Link>

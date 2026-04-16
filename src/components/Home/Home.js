@@ -9,7 +9,7 @@ class Home extends Component {
     this.state = {
       popularMovies: [],
       popularSeries: [],
-      query: ''
+      query: "",
     };
   }
 
@@ -59,23 +59,27 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <form className="search-form" onSubmit={(event) => this.evitarSubmit(event)}>
+        <form
+          className="search-form"
+          onSubmit={(event) => this.evitarSubmit(event)}
+        >
           <input
-            className="search-input" type="text" placeholder="Buscar película o serie..."
+            className="search-input"
+            type="text"
+            placeholder="Buscar película o serie..."
             onChange={(event) => this.controlarCambios(event)}
             value={this.state.query}
           />
           <input type="submit" value="🔍" />
         </form>
-        <h2 className="alert alert-primary">Popular movies this week</h2>
+        <h2 className="alert alert-primary">Películas populares</h2>
         <Link to="/movies">Ver todas</Link>
         <section className="row cards">
           {this.state.popularMovies.map((mov, idx) => (
             <MovieCard movie={mov} key={idx + mov} />
           ))}
         </section>
-
-        <h2 className="alert alert-primary">Popular series this week</h2>
+        <h2 className="alert alert-primary">Series populares</h2>
         <Link to="/series">Ver todas</Link>
         <section className="row cards">
           {this.state.popularSeries.map((ser, idx) => (

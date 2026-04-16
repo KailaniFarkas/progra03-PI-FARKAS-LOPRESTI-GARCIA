@@ -1,3 +1,6 @@
+.title {
+  padding: 7px 0px;
+}
 nav {
   display: grid;
   grid-template-columns: 1fr;
@@ -7,13 +10,27 @@ nav {
 }
 .nav {
   margin: 0 !important;
+  align-items: center;
 }
 .nav a {
   color: #444;
   text-decoration: none;
+  align-items: center;
 }
 .nav a:hover {
   font-weight: bold;
+}
+.nav li {
+  align-items: center;
+}
+.nav-item {
+  width: 7%;
+}
+.logo {
+  display: flex;
+  width: 100%;
+  padding: 3%;
+  border-radius: 5%;
 }
 .search-form,
 .filter-form {
@@ -109,6 +126,12 @@ nav {
   color: #000;
 }
 
+.texto {
+  text-align: center;
+  color: #185fa5;
+  padding-bottom: 20px;
+}
+
 @media (min-width: 765px) {
   nav {
     grid-template-columns: 1fr;
@@ -155,7 +178,6 @@ nav {
 .single-card-tv .card-img-top {
   border-radius: 8px 8px 0 0;
 }
-
 
 .card-title {
   font-size: 1rem;

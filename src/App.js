@@ -25,10 +25,10 @@ function App() {
           <Route path="/detailmovie/:id" component={DetailMovie} />
           <Route path="/detailserie/:id" component={DetailSerie} />
           <Route path="/favorites" component={Favorites} />
-          {<Route path="/login" component={Login} />}
-          {<Route path="/register" component={Register} />}
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
           <Route path="/results/:buscar" component={Results} />
-          {<Route path="/" component={HomeScreen} />}
+          <Route path="/" component={HomeScreen} />
           {/* <Route component={NotFound} /> */}
         </Switch>
         <Footer />
