@@ -57,7 +57,7 @@ class Series extends Component {
           <input
             className="search-input"
             type="text"
-            placeholder="Buscar película o serie..."
+            placeholder="Buscar serie..."
             onChange={(event) => this.controlarCambios(event)}
             value={this.state.query}
           />

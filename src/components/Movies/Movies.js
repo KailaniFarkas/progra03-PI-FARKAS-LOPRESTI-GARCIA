@@ -57,7 +57,7 @@ class Movies extends Component {
           <input
             className="search-input"
             type="text"
-            placeholder="Buscar película o serie..."
+            placeholder="Buscar película..."
             onChange={(event) => this.controlarCambios(event)}
             value={this.state.query}
           />

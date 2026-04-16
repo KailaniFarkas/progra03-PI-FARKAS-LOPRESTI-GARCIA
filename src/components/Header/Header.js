@@ -32,7 +32,7 @@ function Header() {
           </li>
           <li className="ml-auto">
             <Link className="nav-link" to="/register">
-              Registro
+              Crear cuenta
             </Link>
           </li>
           <li className="nav-item">
