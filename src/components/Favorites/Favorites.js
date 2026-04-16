@@ -21,6 +21,17 @@ class Favorites extends Component{
                 .then((response)=>response.json())
             );
             Promise.all(promesas)
+                .then((movies)=> this.setState({favoriteMovies: movies}))
+                .catch((error)=> console.log(error));
+        }
+        let seriesStorage = localStorage.getItem('FavoriteSeries');
+        if (seriesStorage !== null){
+            let serieIds = JSON.parse(seriesStorage);
+            let promesas = serieIds.map((id)=>
+            fetch('https://api.themoviedb.org/3/tv/' + id + '?api_key=' + apiKey)
+                .then((response)=>response.json())
+            );
+            Promise.all(promesas)
                 .then((series)=> this.setState({favoriteSeries: series}))
                 .catch((error)=> console.log(error));
         }

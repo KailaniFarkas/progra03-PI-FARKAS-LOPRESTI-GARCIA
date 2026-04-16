@@ -10,10 +10,6 @@ class Home extends Component {
       popularMovies: [],
       popularSeries: [],
       query: ''
-      // Soon: [],
-      // TopRated: [],
-      // AiringToday: [],
-      // OnTelevision: [],
     };
   }
 
