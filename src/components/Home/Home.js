@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import MovieCard from "../MovieCard/MovieCard";
 import SerieCard from "../SerieCard/SerieCard";
 
@@ -10,10 +10,6 @@ class Home extends Component {
       popularMovies: [],
       popularSeries: [],
       query: ''
-      // Soon: [],
-      // TopRated: [],
-      // AiringToday: [],
-      // OnTelevision: [],
     };
   }
 
@@ -65,12 +61,11 @@ class Home extends Component {
       <div>
         <form className="search-form" onSubmit={(event) => this.evitarSubmit(event)}>
           <input
-            className="search-input"
-            type="text"
+            className="search-input" type="text" placeholder="Buscar película o serie..."
             onChange={(event) => this.controlarCambios(event)}
             value={this.state.query}
           />
-          <input type="submit" value="Buscar" />
+          <input type="submit" value="🔍" />
         </form>
         <h2 className="alert alert-primary">Popular movies this week</h2>
         <Link to="/movies">Ver todas</Link>
@@ -92,4 +87,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

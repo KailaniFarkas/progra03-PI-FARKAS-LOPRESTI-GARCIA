@@ -7,7 +7,7 @@ class SerieCard extends Component {
     this.state = {
       textoBoton: "Ver mas",
       claseOculta: "oculta",
-      fotoFavoritos: "❤️"
+      fotoFavoritos: "♡"
     };
   }
 
@@ -19,9 +19,9 @@ class SerieCard extends Component {
        let storageparse = JSON.parse(storage)
     
       if (storageparse.includes(this.props.serie.id)) {
-        this.setState({fotoFavoritos: "❌"})
+        this.setState({fotoFavoritos: "♥"})
       } else {
-        this.setState({fotoFavoritos: "❤️"})
+        this.setState({fotoFavoritos: "♡"})
       }
     } 
   }
@@ -41,24 +41,24 @@ class SerieCard extends Component {
   }
 
   anadirFav() {
-    if (this.state.fotoFavoritos === "❤️") {
+    if (this.state.fotoFavoritos === "♡") {
       let storage = localStorage.getItem('FavoriteSeries')
       if (storage === null) {
         let primerfav = [this.props.serie.id]
         localStorage.setItem('FavoriteSeries', JSON.stringify(primerfav))
-        this.setState({fotoFavoritos: "❌"})
+        this.setState({fotoFavoritos: "♥"})
     } else {
       let storageparse = JSON.parse(storage)
       storageparse.push(this.props.serie.id)
       localStorage.setItem('FavoriteSeries', JSON.stringify(storageparse))
-      this.setState({fotoFavoritos: "❌"})
+      this.setState({fotoFavoritos: "♥"})
       }
     }else{
         let storage = localStorage.getItem('FavoriteSeries');
         let storageParse = JSON.parse(storage)
         let filtrado = storageParse.filter((id)=> id !== this.props.serie.id);
         localStorage.setItem('FavoriteSeries', JSON.stringify(filtrado));
-        this.setState({fotoFavoritos:"❤️"})
+        this.setState({fotoFavoritos:"♡"})
    }
   }
 
@@ -70,17 +70,17 @@ class SerieCard extends Component {
         <img
           src={"https://image.tmdb.org/t/p/w500" + this.props.serie.poster_path}
           className="card-img-top"
-          alt={this.props.serie.title}
+          alt={this.props.serie.name}
         />
         <div className="cardBody">
-          <h5 className="card-title">{this.props.serie.title}</h5>
+          <h5 className="card-title">{this.props.serie.name}</h5>
           <button onClick={() => this.verDescripcion()}>
             {this.state.textoBoton}
           </button>
           <p className={"card-text " + this.state.claseOculta}>
             {this.props.serie.overview}
           </p>
-          <Link to={"/detailmovie/:" + this.props.serie.id}>Ir a detalle</Link>
+          <Link to={"/detailserie/" + this.props.serie.id}>Ir a detalle</Link>
           <p onClick={() => this.anadirFav()}>{this.state.fotoFavoritos}</p>
         </div>
       </article>

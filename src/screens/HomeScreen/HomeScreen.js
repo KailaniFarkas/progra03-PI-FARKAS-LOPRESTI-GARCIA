@@ -10,7 +10,6 @@ function HomeScreen() {
       <Home />
     </>
   );
-}
 
 function HomeScreen(props) {
   return <Home history={props.history} />;

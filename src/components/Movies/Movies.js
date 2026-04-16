@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import MovieCard from "../MovieCard/MovieCard";
 
 class Movies extends Component {
@@ -6,6 +7,7 @@ class Movies extends Component {
     super(props);
     this.state = {
       popularMovies: [],
+      query: '',
     };
   }
 
@@ -20,9 +22,26 @@ class Movies extends Component {
       .catch((error) => console.log(error));
   }
 
+  evitarSubmit(event) {
+    event.preventDefault();
+    this.props.history.push("/results/" + this.state.query);
+  }
+
+  controlarCambios(event) {
+    this.setState({ query: event.target.value });
+  }
+
   render() {
     return (
       <div>
+        <form className="search-form" onSubmit={(event) => this.evitarSubmit(event)}>
+          <input
+            className="search-input" type="text" placeholder="Buscar película o serie..."
+            onChange={(event) => this.controlarCambios(event)}
+            value={this.state.query}
+          />
+          <input type="submit" value="🔍" />
+        </form>
         <h2 className="alert alert-primary">All movies</h2>
         <section className="row cards">
           {this.state.popularMovies.map((mov, idx) => (
@@ -34,4 +53,4 @@ class Movies extends Component {
   }
 }
 
-export default Movies;
+export default withRouter(Movies);
