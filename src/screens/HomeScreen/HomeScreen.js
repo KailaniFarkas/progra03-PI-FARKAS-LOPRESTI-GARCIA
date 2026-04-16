@@ -1,7 +1,7 @@
 import Home from "../../components/Home/Home";
 
-function HomeScreen(props) {
-  return <Home history={props.history} />; 
+function HomeScreen() {
+  return <Home />;
 }
 
 export default HomeScreen;

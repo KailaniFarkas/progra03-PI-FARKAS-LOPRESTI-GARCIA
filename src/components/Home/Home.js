@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import MovieCard from "../MovieCard/MovieCard";
 import SerieCard from "../SerieCard/SerieCard";
 
@@ -65,8 +65,7 @@ class Home extends Component {
       <div>
         <form className="search-form" onSubmit={(event) => this.evitarSubmit(event)}>
           <input
-            className="search-input"
-            type="text" placeholder="Buscar película o serie..."
+            className="search-input" type="text" placeholder="Buscar película o serie..."
             onChange={(event) => this.controlarCambios(event)}
             value={this.state.query}
           />
@@ -92,4 +91,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);
