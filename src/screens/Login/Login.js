@@ -17,24 +17,23 @@ class Login extends Component {
       [event.target.name]: event.target.value,
     });
   }
-
-  ejecutarBusqueda(e) {
-    e.preventDefault();
-    this.props.history.push("/");
-  }
+  
 
   evitarSubmit(event) {
     event.preventDefault();
   }
 
-  onSubmit(email, password) {
-    //logica que verifique los parametros
-    //verifica si el email exsite y la clave es correcta
+  // onSubmit(email, password) {
+  //   //logica que verifique los parametros
+  //   //verifica si el email exsite y la clave es correcta
 
-    if (user) {
-      cookies.set('user-auth-cookie', user.email)
-    }
-  }
+
+  //   //this.props.history.push("/"); vamos a tener que
+
+  //   if (user) {
+  //     cookies.set('user-auth-cookie', user.email)
+  //   }
+  // }
 
   render() {
     return (
