@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import MovieCard from "../MovieCard/MovieCard";
 import SerieCard from "../SerieCard/SerieCard";
+import Cookies from 'universal-cookie'
+const cookies = new Cookies()
 
 class Favorites extends Component{
     constructor(props){

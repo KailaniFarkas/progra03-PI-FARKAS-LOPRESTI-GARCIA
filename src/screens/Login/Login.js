@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import Cookies from 'universal-cookie'
+const cookies = new Cookies()
 
 class Login extends Component {
   constructor(props) {
@@ -10,7 +12,7 @@ class Login extends Component {
     };
   }
 
-  actualizarDatos(event) {
+  controlarCambios(event) {
     this.setState({
       [event.target.name]: event.target.value,
     });
@@ -23,6 +25,15 @@ class Login extends Component {
 
   evitarSubmit(event) {
     event.preventDefault();
+  }
+
+  onSubmit(email, password) {
+    //logica que verifique los parametros
+    //verifica si el email exsite y la clave es correcta
+
+    if (user) {
+      cookies.set('user-auth-cookie', user.email)
+    }
   }
 
   render() {
@@ -38,14 +49,14 @@ class Login extends Component {
             type="email"
             name="email"
             value={this.state.email}
-            onChange={(event) => this.actualizarDatos(event)}
+            onChange={(event) => this.controlarCambios(event)}
           />
           <label>Contraseña</label>
           <input
             type="password"
             name="password"
             value={this.state.password}
-            onChange={(event) => this.actualizarDatos(event)}
+            onChange={(event) => this.controlarCambios(event)}
           />
           <input type="submit" value="Iniciar Sesión" />
         </form>
