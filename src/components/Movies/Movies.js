@@ -7,6 +7,7 @@ class Movies extends Component {
     super(props);
     this.state = {
       popularMovies: [],
+      popularMoviesbkp: [],
       query: "",
       proxPagNum: 2,
     };
@@ -18,7 +19,7 @@ class Movies extends Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ 
+        this.setState({
           popularMovies: data.results,
           popularMoviesbkp: data.results,
         });
@@ -31,15 +32,12 @@ class Movies extends Component {
   }
 
   controlarCambios(event) {
-    this.setState(
-      { query: event.target.value },
-      ()=>{
-        const peliculasFiltradas = this.state.popularMoviesbkp.filter((movie) => movie.title.toLowerCase().includes(this.state.query.toLocaleLowerCase()))
-        this.setState(
-          {popularMovies: peliculasFiltradas }
-        )
-      }
-    );
+    this.setState({ query: event.target.value }, () => {
+      const peliculasFiltradas = this.state.popularMoviesbkp.filter((movie) =>
+        movie.title.toLowerCase().includes(this.state.query.toLowerCase())
+      );
+      this.setState({ popularMovies: peliculasFiltradas });
+    });
   }
 
   masPeliculas() {
@@ -74,7 +72,7 @@ class Movies extends Component {
           />
           <input type="submit" value="🔍" />
         </form>
-        <h2 className="alert alert-primary">Todas las películas populares</h2>
+        <h2 className="alert alert-primary">Todas las películas</h2>
         <section className="row cards">
           {this.state.popularMovies.map((mov, idx) => (
             <MovieCard movie={mov} key={idx + mov} />

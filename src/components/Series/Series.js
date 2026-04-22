@@ -7,6 +7,7 @@ class Series extends Component {
     super(props);
     this.state = {
       popularSeries: [],
+      popularSeriesbkp: [],
       query: "",
       proxPagNum: 2,
     };
@@ -18,18 +19,25 @@ class Series extends Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ popularSeries: data.results });
+        this.setState({
+          popularSeries: data.results,
+          popularSeriesbkp: data.results,
+        });
       })
       .catch((error) => console.log(error));
   }
 
   evitarSubmit(event) {
     event.preventDefault();
-    this.props.history.push("/results/" + this.state.query);
   }
 
   controlarCambios(event) {
-    this.setState({ query: event.target.value });
+    this.setState({ query: event.target.value }, () => {
+      const seriesFiltradas = this.state.popularSeriesbkp.filter((serie) =>
+        serie.name.toLowerCase().includes(this.state.query.toLowerCase())
+      );
+      this.setState({ popularSeries: seriesFiltradas });
+    });
   }
 
   masSeries() {
@@ -41,6 +49,7 @@ class Series extends Component {
       .then((data) =>
         this.setState({
           popularSeries: this.state.popularSeries.concat(data.results),
+          popularSeriesbkp: this.state.popularSeriesbkp.concat(data.results),
           proxPagNum: (this.state.proxPagNum += 1),
         })
       )
@@ -63,7 +72,7 @@ class Series extends Component {
           />
           <input type="submit" value="🔍" />
         </form>
-        <h2 className="alert alert-primary">Todas las series populares</h2>
+        <h2 className="alert alert-primary">Todas las series</h2>
         <section className="row cards">
           {this.state.popularSeries.map((ser, idx) => (
             <SerieCard serie={ser} key={idx + ser} />
