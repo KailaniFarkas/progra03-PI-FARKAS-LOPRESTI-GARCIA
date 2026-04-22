@@ -24,14 +24,14 @@ class Results extends Component {
   }
 
   buscar(query) {
-    fetch(`https://api.themoviedb.org/3/search/movie?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf&query=${encodeURIComponent(query)}`)
+    fetch(`https://api.themoviedb.org/3/search/movie?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf&query=${(query)}}`)
       .then((response) => response.json())
       .then((data) => {
         this.setState({ movies: data.results });
       })
       .catch((error) => console.log(error));
 
-    fetch(`https://api.themoviedb.org/3/search/tv?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf&query=${encodeURIComponent(query)}`)
+    fetch(`https://api.themoviedb.org/3/search/tv?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf&query=${(query)}}`)
       .then((response) => response.json())
       .then((data) => {
         this.setState({ series: data.results });
@@ -53,9 +53,7 @@ class Results extends Component {
         ) : (
           <section className="row cards">
             {movies.map((movie, idx) => (
-              <MovieCard 
-              movie={movie} 
-              key={idx} />
+              <MovieCard movie={movie} key={idx} />
             ))}
           </section>
         )}
@@ -66,9 +64,7 @@ class Results extends Component {
         ) : (
           <section className="row cards">
             {series.map((serie, idx) => (
-              <SerieCard 
-              serie={serie} 
-              key={idx} />
+              <SerieCard serie={serie} key={idx} />
             ))}
           </section>
         )}

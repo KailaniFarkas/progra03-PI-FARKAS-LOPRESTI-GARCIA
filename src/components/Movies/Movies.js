@@ -18,18 +18,28 @@ class Movies extends Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ popularMovies: data.results });
+        this.setState({ 
+          popularMovies: data.results,
+          popularMoviesbkp: data.results,
+        });
       })
       .catch((error) => console.log(error));
   }
 
   evitarSubmit(event) {
     event.preventDefault();
-    this.props.history.push("/results/" + this.state.query);
   }
 
   controlarCambios(event) {
-    this.setState({ query: event.target.value });
+    this.setState(
+      { query: event.target.value },
+      ()=>{
+        const peliculasFiltradas = this.state.popularMoviesbkp.filter((movie) => movie.title.toLowerCase().includes(this.state.query.toLocaleLowerCase()))
+        this.setState(
+          {popularMovies: peliculasFiltradas }
+        )
+      }
+    );
   }
 
   masPeliculas() {
@@ -41,6 +51,7 @@ class Movies extends Component {
       .then((data) =>
         this.setState({
           popularMovies: this.state.popularMovies.concat(data.results),
+          popularMoviesbkp: this.state.popularMoviesbkp.concat(data.results),
           proxPagNum: (this.state.proxPagNum += 1),
         })
       )
