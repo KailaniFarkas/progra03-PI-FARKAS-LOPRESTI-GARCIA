@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 class SerieCard extends Component {
   constructor(props) {
@@ -40,6 +42,8 @@ class SerieCard extends Component {
   }
 
   anadirFav() {
+    if (!cookies.get('auth-user')) return;
+
     if (this.state.fotoFavoritos === "♡") {
       let storage = localStorage.getItem("FavoriteSeries");
       if (storage === null) {

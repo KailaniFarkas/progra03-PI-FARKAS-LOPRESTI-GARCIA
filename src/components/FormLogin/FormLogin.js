@@ -35,6 +35,7 @@ class Login extends Component {
         } else {
             if (usersFiltrado[0].password === this.state.password) {
                 localStorage.setItem("userInSession", JSON.stringify({sesionActiva: true}))
+                cookies.set('auth-user', this.state.email)
                 this.props.history.push("/")
             } else {
                 this.setState({mensajeError: "Contrasena incorrecta."});

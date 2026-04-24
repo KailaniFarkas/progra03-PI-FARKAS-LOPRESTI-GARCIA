@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
 
 function Header() {
+
+  const cookieUsuario = cookies.get('auth-user');
+
   return (
     <React.Fragment>
       <h1 className="title">UdeSA Movies</h1>

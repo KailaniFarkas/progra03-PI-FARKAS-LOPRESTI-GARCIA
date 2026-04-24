@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 class FormRegister extends Component {
   constructor(props) {
@@ -45,11 +47,13 @@ class FormRegister extends Component {
         } else {
           usersParseado.push(newUser);
           localStorage.setItem("users", JSON.stringify(usersParseado));
+          cookies.set('auth-user', this.state.email);
           this.props.history.push("/login");
         }
       } else {
         const initialUsers = [newUser];
         localStorage.setItem("users", JSON.stringify(initialUsers));
+        cookies.set('auth-user', this.state.email);
         this.props.history.push("/login");
       }
     }
