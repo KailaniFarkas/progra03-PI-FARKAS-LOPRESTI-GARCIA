@@ -10,6 +10,7 @@ class Series extends Component {
       onAirSeries: [],
       topRatedSeries: [],
 
+      popularSeriesbkp: [],
       query: "",
       proxPagNum: 2,
       proxPagNumOnAir: 2,
@@ -23,7 +24,10 @@ class Series extends Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ popularSeries: data.results });
+        this.setState({
+          popularSeries: data.results,
+          popularSeriesbkp: data.results,
+        });
       })
       .catch((error) => console.log(error));
 
@@ -49,11 +53,15 @@ class Series extends Component {
 
   evitarSubmit(event) {
     event.preventDefault();
-    this.props.history.push("/results/" + this.state.query);
   }
 
   controlarCambios(event) {
-    this.setState({ query: event.target.value });
+    this.setState({ query: event.target.value }, () => {
+      const seriesFiltradas = this.state.popularSeriesbkp.filter((serie) =>
+        serie.name.toLowerCase().includes(this.state.query.toLowerCase())
+      );
+      this.setState({ popularSeries: seriesFiltradas });
+    });
   }
 
   masSeries() {
@@ -65,6 +73,7 @@ class Series extends Component {
       .then((data) =>
         this.setState({
           popularSeries: this.state.popularSeries.concat(data.results),
+          popularSeriesbkp: this.state.popularSeriesbkp.concat(data.results),
           proxPagNum: (this.state.proxPagNum += 1),
         })
       )

@@ -7,8 +7,11 @@ class Movies extends Component {
     super(props);
     this.state = {
       popularMovies: [],
+      popularMoviesbkp: [],
       nowPlayingMovies: [],
+      nowPlayingMoviesbkp: [],
       upcomingMovies: [],
+      upcomingMoviesdkp: [],
       query: "",
       proxPagNum: 2,
       proxPagNumPlaying:2,
@@ -22,7 +25,10 @@ class Movies extends Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ popularMovies: data.results });
+        this.setState({
+          popularMovies: data.results,
+          popularMoviesbkp: data.results,
+        });
       })
       .catch((error) => console.log(error));
 
@@ -42,11 +48,15 @@ class Movies extends Component {
 
   evitarSubmit(event) {
     event.preventDefault();
-    this.props.history.push("/results/" + this.state.query);
   }
 
   controlarCambios(event) {
-    this.setState({ query: event.target.value });
+    this.setState({ query: event.target.value }, () => {
+      const peliculasFiltradas = this.state.popularMoviesbkp.filter((movie) =>
+        movie.title.toLowerCase().includes(this.state.query.toLowerCase())
+      );
+      this.setState({ popularMovies: peliculasFiltradas });
+    });
   }
 
   masPeliculas() {
@@ -58,6 +68,7 @@ class Movies extends Component {
       .then((data) =>
         this.setState({
           popularMovies: this.state.popularMovies.concat(data.results),
+          popularMoviesbkp: this.state.popularMoviesbkp.concat(data.results),
           proxPagNum: (this.state.proxPagNum += 1),
         })
       )
@@ -71,6 +82,8 @@ class Movies extends Component {
       .then((data) =>
         this.setState({
           nowPlayingMovies: this.state.nowPlayingMovies.concat(data.results),
+          nowPlayingMoviesbkp: this.state.nowPlayingMoviesbkp.concat(data.results),
+
           proxPagNumPlaying: this.state.proxPagNumPlaying += 1,
         })
       )
@@ -84,6 +97,8 @@ class Movies extends Component {
       .then((data) =>
         this.setState({
           upcomingMovies: this.state.upcomingMovies.concat(data.results),
+          upcomingMoviesdkp: this.state.upcomingMoviesdkp.concat(data.results),
+
           proxPagNumUpcoming: this.state.proxPagNumUpcoming += 1,
         })
       )
