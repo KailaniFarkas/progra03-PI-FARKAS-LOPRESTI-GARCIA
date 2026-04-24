@@ -67,7 +67,8 @@ class SerieCard extends Component {
 
   render() {
     console.log(this.props);
-
+    console.log(this.props.serie.name);
+    
     return (
       <article className="single-card-movie" key={this.props.serie.id}>
         <img
@@ -84,7 +85,7 @@ class SerieCard extends Component {
             {this.props.serie.overview}
           </p>
           <Link to={"/detailserie/" + this.props.serie.id}>Ir a detalle</Link>
-          <p onClick={() => this.anadirFav()}>{this.state.fotoFavoritos}</p>
+          {this.props.inSession && <p onClick={() => this.anadirFav()}>{this.state.fotoFavoritos}</p>}
         </div>
       </article>
     );

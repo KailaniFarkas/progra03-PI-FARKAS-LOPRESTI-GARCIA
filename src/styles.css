@@ -172,6 +172,7 @@ nav {
   padding-bottom: 15px;
   margin-bottom: 20px;
   overflow: hidden;
+  min-width: 250px;
 }
 
 .single-card-movie .card-img-top,

@@ -12,7 +12,7 @@ import Register from "./screens/Register/Register";
 import Results from "./screens/Results/Results";
 import DetailMovie from "./screens/DetailMovie/DetailMovie";
 import DetailSerie from "./screens/DetailSerie/DetailSerie";
-//import NotFound from "./screens/NotFound/NotFound";
+import NotFound from "./screens/NotFound/NotFound";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/results/:buscar" component={Results} />
           <Route path="/" component={HomeScreen} />
-          {/* <Route component={NotFound} /> */}
+          <Route component={NotFound} />
         </Switch>
         <Footer />
       </div>

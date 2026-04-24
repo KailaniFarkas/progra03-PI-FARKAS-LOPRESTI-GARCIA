@@ -16,15 +16,15 @@ class MovieCard extends Component {
   componentDidMount() {
     let storage = localStorage.getItem("FavoriteMovies");
 
-    if (storage !== null) {
-      let storageparse = JSON.parse(storage);
+        if (storage !== null) {
+          let storageparse = JSON.parse(storage);
 
-      if (storageparse.includes(this.props.movie.id)) {
-        this.setState({ fotoFavoritos: "♥" });
-      } else {
-        this.setState({ fotoFavoritos: "♡" });
-      }
-    }
+          if (storageparse.includes(this.props.movie.id)) {
+            this.setState({ fotoFavoritos: "♥" });
+          } else {
+            this.setState({ fotoFavoritos: "♡" });
+          }
+        }
   }
 
   verDescripcion() {
@@ -66,7 +66,7 @@ class MovieCard extends Component {
   }
 
   render() {
-    console.log(this.props);
+    console.log(this.props.movie.id);
 
     return (
       <article className="single-card-movie" key={this.props.movie.id}>
@@ -84,7 +84,7 @@ class MovieCard extends Component {
             {this.props.movie.overview}
           </p>
           <Link to={"/detailmovie/" + this.props.movie.id}>Ir a detalle</Link>
-          <p onClick={() => this.anadirFav()}>{this.state.fotoFavoritos}</p>
+          {this.props.inSession && <p onClick={() => this.anadirFav()}>{this.state.fotoFavoritos}</p>}
         </div>
       </article>
     );
