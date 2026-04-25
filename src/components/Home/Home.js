@@ -20,10 +20,6 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    console.log(
-      "me meti en el component"
-    );
-    
     const apiKey = "520cf7be1d7b48a01d4f5696ad4cbfaf";
 
     fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`)
@@ -64,11 +60,6 @@ class Home extends Component {
   render() {
     const inSession = cookies.get('auth-user');
 
-    console.log(this.state);
-    console.log(this.state.onAirSeries.map(serie => serie
-    ));
-    
-    
     return (
       <div>
         <form

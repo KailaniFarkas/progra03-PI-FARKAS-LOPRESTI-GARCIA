@@ -55,15 +55,9 @@ class DetailMovie extends Component {
   }
 
   render() {
-    console.log(this.state.movie);
-    console.log(this.state.movie.title);
-    
       return (
-        
-        
         <div>
-          
-          <h2 className="alert alert-primary">{this.state.movie.title} {console.log(this.state.movie.title)} </h2>
+          <h2 className="alert alert-primary">{this.state.movie.title}</h2>
           <section className="row">
             <img
               className="col-md-6"

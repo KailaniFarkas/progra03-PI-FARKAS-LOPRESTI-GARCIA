@@ -76,7 +76,7 @@ class Series extends Component {
         </form>
         <h2 className="alert alert-primary">Series populares</h2>
         <section className="row cards">
-          {this.state.popularSeries.map((ser, idx) => (
+          {this.state.popularSeries.length === 0 ? <p>Cargando...</p> : this.state.popularSeries.map((ser, idx) => (
             <SerieCard serie={ser} key={idx + ser} />
           ))}
         </section>

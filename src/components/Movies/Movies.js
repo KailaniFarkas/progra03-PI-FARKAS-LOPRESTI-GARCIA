@@ -80,7 +80,7 @@ class Movies extends Component {
         
         <h2 className="alert alert-primary">Películas populares</h2>
         <section className="row cards">
-          {this.state.popularMovies.map((mov, idx) => (
+          {this.state.popularMovies.length === 0 ? <p>Cargando...</p> : this.state.popularMovies.map((mov, idx) => (
             <MovieCard movie={mov} key={idx + mov} />
           ))}
         </section>

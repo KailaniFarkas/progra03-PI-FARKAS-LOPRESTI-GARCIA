@@ -55,7 +55,6 @@ class DetailSerie extends Component {
   }
 
   render() {
-    console.log(this.state.serie);
       return (
         <div>
           <h2 className="alert alert-warning">{this.state.serie.name}</h2>
