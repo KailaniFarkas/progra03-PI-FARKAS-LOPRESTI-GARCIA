@@ -1,95 +1,80 @@
-import React, { Component } from "react";
+import {useState, useEffect} from "react"
 import { Link } from "react-router-dom";
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-class SerieCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      textoBoton: "Ver más",
-      claseOculta: "oculta",
-      fotoFavoritos: "♡",
-    };
-  }
+function SerieCard (props) {
+  const { serie, inSession } = props;
+  const [textoBoton, setTextoBoton] = useState("Ver más")
+  const [claseOculta, setClaseOculta] = useState("oculta")
+  const [fotoFavoritos, setFotoFavoritos] = useState("♡")
 
-  componentDidMount() {
+  useEffect(() => {
     let storage = localStorage.getItem("FavoriteSeries");
-
     if (storage !== null) {
       let storageparse = JSON.parse(storage);
-
-      if (storageparse.includes(this.props.serie.id)) {
-        this.setState({ fotoFavoritos: "♥" });
+      if (storageparse.includes(serie.id)) {
+        setFotoFavoritos("♥");
       } else {
-        this.setState({ fotoFavoritos: "♡" });
+        setFotoFavoritos("♡");
       }
     }
-  }
+  }, [])
 
-  verDescripcion() {
-    if (this.state.textoBoton === "Ver más") {
-      this.setState({
-        textoBoton: "Ver menos",
-        claseOculta: "",
-      });
+  function verDescripcion() {
+    if (textoBoton === "Ver más") {
+      setTextoBoton("Ver menos");
+      setClaseOculta("");
     } else {
-      this.setState({
-        textoBoton: "Ver más",
-        claseOculta: "oculta",
-      });
+      setTextoBoton("Ver más");
+      setClaseOculta("oculta");
     }
   }
 
-  anadirFav() {
+  function anadirFav() {
     if (!cookies.get('auth-user')) return;
 
-    if (this.state.fotoFavoritos === "♡") {
+    if (fotoFavoritos === "♡") {
       let storage = localStorage.getItem("FavoriteSeries");
       if (storage === null) {
-        let primerfav = [this.props.serie.id];
+        let primerfav = [serie.id];
         localStorage.setItem("FavoriteSeries", JSON.stringify(primerfav));
-        this.setState({ fotoFavoritos: "♥" });
+        setFotoFavoritos("♥");
       } else {
         let storageparse = JSON.parse(storage);
-        storageparse.push(this.props.serie.id);
+        storageparse.push(serie.id);
         localStorage.setItem("FavoriteSeries", JSON.stringify(storageparse));
-        this.setState({ fotoFavoritos: "♥" });
+        setFotoFavoritos("♥");
       }
     } else {
       let storage = localStorage.getItem("FavoriteSeries");
       let storageParse = JSON.parse(storage);
-      let filtrado = storageParse.filter((id) => id !== this.props.serie.id);
+      let filtrado = storageParse.filter((id) => id !== serie.id);
       localStorage.setItem("FavoriteSeries", JSON.stringify(filtrado));
-      this.setState({ fotoFavoritos: "♡" });
+      setFotoFavoritos("♡");
     }
   }
 
-  render() {
-    console.log(this.props);
-    console.log(this.props.serie.name);
-    
-    return (
-      <article className="single-card-movie" key={this.props.serie.id}>
-        <img
-          src={"https://image.tmdb.org/t/p/w500" + this.props.serie.poster_path}
-          className="card-img-top"
-          alt={this.props.serie.name}
-        />
-        <div className="cardBody">
-          <h5 className="card-title">{this.props.serie.name}</h5>
-          <button onClick={() => this.verDescripcion()}>
-            {this.state.textoBoton}
-          </button>
-          <p className={"card-text " + this.state.claseOculta}>
-            {this.props.serie.overview}
-          </p>
-          <Link to={"/detailserie/" + this.props.serie.id}>Ir a detalle</Link>
-          {this.props.inSession && <p onClick={() => this.anadirFav()}>{this.state.fotoFavoritos}</p>}
-        </div>
-      </article>
-    );
-  }
+  return (
+    <article className="single-card-movie">
+      <img
+        src={"https://image.tmdb.org/t/p/w500" + serie.poster_path}
+        className="card-img-top"
+        alt={serie.name}
+      />
+      <div className="cardBody">
+        <h5 className="card-title">{serie.name}</h5>
+        <button onClick={() => verDescripcion()}>
+          {textoBoton}
+        </button>
+        <p className={"card-text " + claseOculta}>
+          {serie.overview}
+        </p>
+        <Link to={"/detailserie/" + serie.id}>Ir a detalle</Link>
+        {inSession && <p onClick={() => anadirFav()}>{fotoFavoritos}</p>}
+      </div>
+    </article>
+  );
 }
 
 export default SerieCard;
