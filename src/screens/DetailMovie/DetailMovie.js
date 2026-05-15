@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 class DetailMovie extends Component {
   constructor(props) {
@@ -18,7 +20,7 @@ class DetailMovie extends Component {
       .then((response) => response.json())
       .then((data) => {
         this.setState({ movie: data });
-      
+
         let storage = localStorage.getItem("FavoriteMovies");
         if (storage !== null) {
           let storageparse = JSON.parse(storage);
@@ -28,11 +30,13 @@ class DetailMovie extends Component {
             this.setState({ fotoFavoritos: "♡" });
           }
         }
-    })
-    .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
   }
 
   anadirFav() {
+    if (!cookies.get("auth-user")) return;
+
     if (this.state.fotoFavoritos === "♡") {
       let storage = localStorage.getItem("FavoriteMovies");
       if (storage === null) {
@@ -46,49 +50,51 @@ class DetailMovie extends Component {
         this.setState({ fotoFavoritos: "♥" });
       }
     } else {
-      let storage = localStorage.getItem('FavoriteMovies');
+      let storage = localStorage.getItem("FavoriteMovies");
       let storageparse = JSON.parse(storage);
       let filtrado = storageparse.filter((id) => id !== this.state.movie.id);
-      localStorage.setItem('FavoriteMovies', JSON.stringify(filtrado));
-      this.setState({ fotoFavoritos: '♡' });
+      localStorage.setItem("FavoriteMovies", JSON.stringify(filtrado));
+      this.setState({ fotoFavoritos: "♡" });
     }
   }
 
   render() {
-      return (
-        <div>
-          <h2 className="alert alert-primary">{this.state.movie.title}</h2>
-          <section className="row">
-            <img
-              className="col-md-6"
-              src={'https://image.tmdb.org/t/p/w500' + this.state.movie.poster_path}
-              alt={this.state.movie.title}
-            />
-            <section className="col-md-6 info">
-              <h3>Descripción</h3>
-              <p className="description">{this.state.movie.overview}</p>
-              <p className="mt-0 mb-0">
-                <strong>Fecha de estreno: </strong> {this.state.movie.release_date}
-              </p>
-              <p className="mt-0 mb-0">
-                <strong>Duración: </strong> {this.state.movie.runtime} minutos
-              </p>
-              <p className="mt-0 mb-0">
-                <strong>Puntuación: </strong> {this.state.movie.vote_average}
-              </p>
-              <p className="mt-0 mb-0">
-                <strong>Géneros: </strong>{' '}
-                {this.state.movie.genres
-                  ? this.state.movie.genres.map((g) => g.name).join(', ') : 'Cargando...'}
-              </p>
-              <p onClick={() => this.anadirFav()}>
-                {this.state.fotoFavoritos}
-              </p>
-            </section>
+    return (
+      <div>
+        <h2 className="alert alert-primary">{this.state.movie.title}</h2>
+        <section className="row">
+          <img
+            className="col-md-6"
+            src={
+              "https://image.tmdb.org/t/p/w500" + this.state.movie.poster_path
+            }
+            alt={this.state.movie.title}
+          />
+          <section className="col-md-6 info">
+            <h3>Descripción</h3>
+            <p className="description">{this.state.movie.overview}</p>
+            <p className="mt-0 mb-0">
+              <strong>Fecha de estreno: </strong>{" "}
+              {this.state.movie.release_date}
+            </p>
+            <p className="mt-0 mb-0">
+              <strong>Duración: </strong> {this.state.movie.runtime} minutos
+            </p>
+            <p className="mt-0 mb-0">
+              <strong>Puntuación: </strong> {this.state.movie.vote_average}
+            </p>
+            <p className="mt-0 mb-0">
+              <strong>Géneros: </strong>{" "}
+              {this.state.movie.genres
+                ? this.state.movie.genres.map((g) => g.name).join(", ")
+                : "Cargando..."}
+            </p>
+            <p onClick={() => this.anadirFav()}>{this.state.fotoFavoritos}</p>
           </section>
-        </div>
-      );
-    }
+        </section>
+      </div>
+    );
   }
+}
 
 export default DetailMovie;
