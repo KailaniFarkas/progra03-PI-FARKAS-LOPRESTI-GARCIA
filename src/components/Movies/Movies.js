@@ -37,6 +37,7 @@ class Movies extends Component {
 
   controlarCambios(event) {
     this.setState({ query: event.target.value }, () => {
+      // 
       const peliculasFiltradas = this.state.popularMoviesbkp.filter((movie) =>
         movie.title.toLowerCase().includes(this.state.query.toLowerCase())
       );

@@ -1,91 +1,87 @@
+import {useState} from "react";
+import { useHistory } from "react-router-dom";
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-class FormRegister extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      mensajeError: "",
-    };
-  }
+function FormRegister (props) {
+  const [register, setRegister] = useState([])
+  const [email, setEmail] = useState([])
+  const [password, setPassword] = useState([])
+  const [mensajeError, setMensajeError] = useState([])
+  const history = useHistory()
+}
 
-  controlarCambios(event, campo) {
-    this.setState({
-      [campo]: event.target.value,
-    });
+  function controlarCambios(e) {
+    let {name,value} = e.target;
+    if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
   }
-
-  onSubmit(event) {
-    event.preventDefault();
+  
+  function onSubmit(e) {
+    e.preventDefault();
 
     const newUser = {
-      password: this.state.password,
-      email: this.state.email,
+      password: password,
+      email: email,
       createdAt: "",
     };
 
-    if (this.state.password.length < 6) {
-      this.setState({
-        mensajeError:
-          "Recuerda que la contraseña debe tener un mínimo de 6 caracteres.",
-      });
+    if (password.length < 6) {
+      setMensajeError(
+        "Recuerda que la contraseña debe tener un mínimo de 6 caracteres."
+      );
     } else {
       let usersStorage = localStorage.getItem("users");
       if (usersStorage !== null) {
         let usersParseado = JSON.parse(usersStorage);
         let usersFiltrado = usersParseado.filter(
-          (user) => user.email === this.state.email
+          (user) => user.email === email
         );
+
         if (usersFiltrado.length > 0) {
-          this.setState({
-            mensajeError: "Ya existe un usuario con el email ingresado",
-          });
+          setMensajeError("Ya existe un usuario con el email ingresado");
         } else {
           usersParseado.push(newUser);
           localStorage.setItem("users", JSON.stringify(usersParseado));
-          cookies.set('auth-user', this.state.email);
-          this.props.history.push("/login");
-        }
-      } else {
+          cookies.set('auth-user', email);
+          history.push("/login");
+          }
+        } else {
         const initialUsers = [newUser];
         localStorage.setItem("users", JSON.stringify(initialUsers));
-        cookies.set('auth-user', this.state.email);
-        this.props.history.push("/login");
+        cookies.set('auth-user', email);
+        history.push("/login");
       }
     }
   }
 
-  render() {
-    return (
+
+   return (
       <div>
         <h2 className="alert alert-primary">Crear Cuenta</h2>
         <form
           className="register-form"
-          onSubmit={(event) => this.onSubmit(event)}
+          onSubmit={(e) => onSubmit(e)}
         >
           <label>Email</label>
           <input
             type="email"
             name="email"
-            value={this.state.email}
-            onChange={(event) => this.controlarCambios(event, "email")}
+            value={email}
+            onChange={(e) => controlarCambios(e, "email")}
           />
           <label>Contraseña</label>
           <input
             type="password"
             name="password"
-            value={this.state.password}
-            onChange={(event) => this.controlarCambios(event, "password")}
+            value={password}
+            onChange={(e) => controlarCambios(e, "password")}
           />
           <input type="submit" value="Crear Cuenta" />
         </form>
-        <p>{this.state.mensajeError}</p>
+        <p>{mensajeError}</p>
       </div>
     );
-  }
-}
-export default withRouter(FormRegister);
+
+export default FormRegister;

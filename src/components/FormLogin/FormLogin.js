@@ -1,9 +1,8 @@
-import {useState} from "react"
-import { withRouter } from "react-router-dom";
+import {useState, useEffect} from "react"
 import Cookies from 'universal-cookie'
 const cookies = new Cookies()
 
-function Login (props) {
+function FormLogin (props) {
   const [login, setLogin] = useState([])
   const [email, setEmail] = useState([])
   const [password, setPassword] = useState([])
@@ -65,4 +64,4 @@ function Login (props) {
       </div>
     );
 
-export default withRouter(Login);
+export default FormLogin;
