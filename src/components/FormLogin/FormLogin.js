@@ -1,77 +1,68 @@
-import React, { Component } from "react";
+import {useState} from "react"
 import { withRouter } from "react-router-dom";
 import Cookies from 'universal-cookie'
 const cookies = new Cookies()
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      mensajeError: ""
-    };
+function Login (props) {
+  const [login, setLogin] = useState([])
+  const [email, setEmail] = useState([])
+  const [password, setPassword] = useState([])
+  const [mensajeError, setMensajeError] = useState([])
   }
 
-  controlarCambios(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+  function controlarCambios(e) {
+    let {name,value} = event.target;
   }
   
 
-  onSubmit(event) {
-    event.preventDefault();
+  function onSubmit(e) {
+    e.preventDefault();
 
     let usersStorage = localStorage.getItem ('users')
     if (usersStorage === null) {
-        this.setState({mensajeError: "Credenciales invalidas"});
+          ({mensajeError: "Credenciales invalidas"});
     } else {
         let usersParseado = JSON.parse(usersStorage);
-        let usersFiltrado = usersParseado.filter((user) => user.email === this.state.email)
+        let usersFiltrado = usersParseado.filter((user) => user.email === email)
 
         if (usersFiltrado.length === 0) {
-            this.setState({mensajeError: "No existe un usuario con este email."});
+            setState({mensajeError: "No existe un usuario con este email."});
         } else {
-            if (usersFiltrado[0].password === this.state.password) {
+            if (usersFiltrado[0].password === password) {
                 localStorage.setItem("userInSession", JSON.stringify({sesionActiva: true}))
-                cookies.set('auth-user', this.state.email)
-                this.props.history.push("/")
+                cookies.set('auth-user', email)
+                history.push("/")
             } else {
-                this.setState({mensajeError: "Contrasena incorrecta."});
+                setState({mensajeError: "Contrasena incorrecta."});
             }
         }
     }
   }
-
-  render() {
     return (
       <div>
         <h2 className="alert alert-primary">Iniciar Sesión</h2>
         <form
           className="register-form"
-          onSubmit={(event) => this.onSubmit(event)}
+          onSubmit={(event) => onSubmit(event)}
         >
           <label>Email</label>
           <input
             type="email"
             name="email"
-            value={this.state.email}
-            onChange={(event) => this.controlarCambios(event)}
+            value={email}
+            onChange={(event) => controlarCambios(event)}
           />
           <label>Contraseña</label>
           <input
             type="password"
             name="password"
-            value={this.state.password}
-            onChange={(event) => this.controlarCambios(event)}
+            value={password}
+            onChange={(event) => controlarCambios(event)}
           />
           <input type="submit" value="Iniciar Sesión" />
         </form>
-        <p>{this.state.mensajeError}</p>
+        <p>{mensajeError}</p>
       </div>
     );
-  }
-}
 
 export default withRouter(Login);

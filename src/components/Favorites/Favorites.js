@@ -1,19 +1,16 @@
-import React, {Component} from 'react';
+import {useState} from "react"
 import MovieCard from "../MovieCard/MovieCard";
 import SerieCard from "../SerieCard/SerieCard";
 import Cookies from 'universal-cookie'
 const cookies = new Cookies()
 
-class Favorites extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            favoriteMovies: [],
-            favoriteSeries: [],
-        };
-    }
+function Favorites (props){
+  const [favoriteMovies, setFavoriteMovies] = useState([])
+  const [favoriteSeries, setFavoriteSeries] = useState([])
 
-    componentDidMount (){
+}
+
+    useEffect (() => { 
         let apiKey = '520cf7be1d7b48a01d4f5696ad4cbfaf';
         let moviesStorage = localStorage.getItem('FavoriteMovies');
         if (moviesStorage !== null){
@@ -37,14 +34,14 @@ class Favorites extends Component{
                 .then((series)=> this.setState({favoriteSeries: series}))
                 .catch((error)=> console.log(error));
         }
-    }
-    render(){
+    }, [])
+
         return(
             <div>
             <h2 className="alert alert-primary">Películas favoritas</h2>
             <section className="row cards">
-              {this.state.favoriteMovies.length > 0 ? (
-                this.state.favoriteMovies.map((movie) => (
+              {favoriteMovies.length > 0 ? (
+                favoriteMovies.map((movie) => (
                   <MovieCard movie={movie} key={movie.id} />
                 ))
               ) : (
@@ -54,8 +51,8 @@ class Favorites extends Component{
     
             <h2 className="alert alert-warning">Series favoritas</h2>
             <section className="row cards">
-              {this.state.favoriteSeries.length > 0 ? (
-                this.state.favoriteSeries.map((serie) => (
+              {favoriteSeries.length > 0 ? (
+                favoriteSeries.map((serie) => (
                   <SerieCard serie={serie} key={serie.id} />
                 ))
               ) : (
@@ -64,7 +61,5 @@ class Favorites extends Component{
             </section>
           </div>  
         );
-    }
-}
 
 export default Favorites;
