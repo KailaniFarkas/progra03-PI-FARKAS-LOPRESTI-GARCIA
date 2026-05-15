@@ -1,96 +1,80 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import {useState, useEffect} from "react"
 import MovieCard from "../MovieCard/MovieCard";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
-class Movies extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      popularMovies: [],
-      popularMoviesbkp: [],
+function Movies (props) {
+  const [popularMovies, setPopularMovies] = useState([])
+  const [popularMoviesbkp, setPopularMoviesbkp] = useState([])
+  const [query, setQuery] = useState("")
+  const [proxPagNum, setProxPagNum] = useState(2)
 
-      query: "",
-
-      proxPagNum: 2,
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     fetch(
       "https://api.themoviedb.org/3/movie/popular?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf"
     )
       .then((response) => response.json())
       .then((data) => {
-        this.setState({
-          popularMovies: data.results,
-          popularMoviesbkp: data.results,
-        });
+        setPopularMovies(data.results)
+        setPopularMoviesbkp(data.results)
       })
       .catch((error) => console.log(error));
+  }, [])
 
-  
+  function evitarSubmit(e) {
+    e.preventDefault();
   }
 
-  evitarSubmit(event) {
-    event.preventDefault();
+  function controlarCambios(e) {
+    const valor = e.target.value;
+    setQuery(valor);
+    const moviesFiltradas = popularMoviesbkp.filter((movie) =>
+      movie.title.toLowerCase().includes(valor.toLowerCase())
+    );
+    setPopularMovies(moviesFiltradas);
   }
 
-  controlarCambios(event) {
-    this.setState({ query: event.target.value }, () => {
-      // 
-      const peliculasFiltradas = this.state.popularMoviesbkp.filter((movie) =>
-        movie.title.toLowerCase().includes(this.state.query.toLowerCase())
-      );
-      this.setState({ popularMovies: peliculasFiltradas });
-    });
-  }
-
-  masPeliculas() {
+  function masPeliculas() {
     fetch(
       "https://api.themoviedb.org/3/movie/popular?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf&page=" +
-        this.state.proxPagNum
+        proxPagNum
     )
       .then((response) => response.json())
-      .then((data) =>
-        this.setState({
-          popularMovies: this.state.popularMovies.concat(data.results),
-          popularMoviesbkp: this.state.popularMoviesbkp.concat(data.results),
-          proxPagNum: (this.state.proxPagNum += 1),
-        })
-      )
-      .catch((error) => console.log(error)); 
+      .then((data) => {
+        setPopularMovies(popularMovies.concat(data.results))
+        setPopularMoviesbkp(popularMoviesbkp.concat(data.results))
+        setProxPagNum(proxPagNum + 1)
+      })
+      .catch((error) => console.log(error));
   }
 
+  return (
+    <div>
+      <form
+        className="search-form"
+        onSubmit={(event) => evitarSubmit(event)}
+      >
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Buscar película..."
+          onChange={(event) => controlarCambios(event)}
+          value={query}
+        />
+        <input type="submit" value="🔍" />
+      </form>
 
-  render() {
-    return (
-      <div>
-        <form
-          className="search-form"
-          onSubmit={(event) => this.evitarSubmit(event)}
-        >
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Buscar película..."
-            onChange={(event) => this.controlarCambios(event)}
-            value={this.state.query}
-          />
-          <input type="submit" value="🔍" />
-        </form>
-        
-        <h2 className="alert alert-primary">Películas populares</h2>
-        <section className="row cards">
-          {this.state.popularMovies.length === 0 ? <p>Cargando...</p> : this.state.popularMovies.map((mov, idx) => (
-            <MovieCard movie={mov} key={idx + mov} />
-          ))}
-        </section>
-        <p onClick={() => this.masPeliculas()} className="texto">
-          Cargar más
-        </p>
-      </div>
-    );
-  }
+      <h2 className="alert alert-primary">Películas populares</h2>
+      <section className="row cards">
+        {popularMovies.length === 0 ? <p>Cargando...</p> : popularMovies.map((mov) => (
+          <MovieCard movie={mov} key={mov.id} inSession={!!cookies.get('auth-user')} />
+        ))}
+      </section>
+      <p onClick={() => masPeliculas()} className="texto">
+        Cargar más
+      </p>
+    </div>
+  );
 }
 
-export default withRouter(Movies);
+export default Movies;

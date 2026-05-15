@@ -1,91 +1,79 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import {useState, useEffect} from "react"
 import SerieCard from "../SerieCard/SerieCard";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
-class Series extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      popularSeries: [],
-      popularSeriesbkp: [],
+function Series (props) {
+  const [popularSeries, setPopularSeries] = useState([])
+  const [popularSeriesbkp, setPopularSeriesbkp] = useState([])
+  const [query, setQuery] = useState("")
+  const [proxPagNum, setProxPagNum] = useState(2)
 
-      query: "",
-      proxPagNum: 2,
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     fetch(
       "https://api.themoviedb.org/3/tv/popular?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf"
     )
       .then((response) => response.json())
       .then((data) => {
-        this.setState({
-          popularSeries: data.results,
-          popularSeriesbkp: data.results,
-        });
+        setPopularSeries(data.results)
+        setPopularSeriesbkp(data.results)
+      })
+      .catch((error) => console.log(error));
+  }, [])
+
+  function evitarSubmit(e) {
+    e.preventDefault();
+  }
+
+  function controlarCambios(e) {
+    const valor = e.target.value;
+    setQuery(valor);
+    const seriesFiltradas = popularSeriesbkp.filter((serie) =>
+      serie.name.toLowerCase().includes(valor.toLowerCase())
+    );
+    setPopularSeries(seriesFiltradas);
+  }
+
+  function masSeries() {
+    fetch(
+      "https://api.themoviedb.org/3/tv/popular?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf&page=" +
+        proxPagNum
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setPopularSeries(popularSeries.concat(data.results))
+        setPopularSeriesbkp(popularSeriesbkp.concat(data.results))
+        setProxPagNum(proxPagNum + 1)
       })
       .catch((error) => console.log(error));
   }
 
-  evitarSubmit(event) {
-    event.preventDefault();
-  }
-
-  controlarCambios(event) {
-    this.setState({ query: event.target.value }, () => {
-      const seriesFiltradas = this.state.popularSeriesbkp.filter((serie) =>
-        serie.name.toLowerCase().includes(this.state.query.toLowerCase())
-      );
-      this.setState({ popularSeries: seriesFiltradas });
-    });
-  }
-
-  masSeries() {
-    fetch(
-      "https://api.themoviedb.org/3/tv/popular?api_key=520cf7be1d7b48a01d4f5696ad4cbfaf&page=" +
-        this.state.proxPagNum
-    )
-      .then((response) => response.json())
-      .then((data) =>
-        this.setState({
-          popularSeries: this.state.popularSeries.concat(data.results),
-          popularSeriesbkp: this.state.popularSeriesbkp.concat(data.results),
-          proxPagNum: (this.state.proxPagNum += 1),
-        })
-      )
-      .catch((error) => console.log(error));
-  }
-  
-
-  render() {
-    return (
-      <div>
-        <form
-          className="search-form"
-          onSubmit={(event) => this.evitarSubmit(event)}
-        >
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Buscar serie..."
-            onChange={(event) => this.controlarCambios(event)}
-            value={this.state.query}
-          />
-          <input type="submit" value="🔍" />
-        </form>
-        <h2 className="alert alert-primary">Series populares</h2>
-        <section className="row cards">
-          {this.state.popularSeries.length === 0 ? <p>Cargando...</p> : this.state.popularSeries.map((ser, idx) => (
-            <SerieCard serie={ser} key={idx + ser} />
-          ))}
-        </section>
-        <p onClick={() => this.masSeries()} className="texto">
-          Cargar más
-        </p>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <form
+        className="search-form"
+        onSubmit={(event) => evitarSubmit(event)}
+      >
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Buscar serie..."
+          onChange={(event) => controlarCambios(event)}
+          value={query}
+        />
+        <input type="submit" value="🔍" />
+      </form>
+      <h2 className="alert alert-primary">Series populares</h2>
+      <section className="row cards">
+        {popularSeries.length === 0 ? <p>Cargando...</p> : popularSeries.map((ser) => (
+          <SerieCard serie={ser} key={ser.id} inSession={cookies.get('auth-user') ? true : false} />
+        ))}
+      </section>
+      <p onClick={() => masSeries()} className="texto">
+        Cargar más
+      </p>
+    </div>
+  );
 }
 
-export default withRouter(Series);
+export default (Series);
